@@ -1,0 +1,18 @@
+---
+title: "PROJECT TITLE"
+author: "NAME HERE"
+date: "TODAY'S DATE"
+output:
+  html_document: default
+---
+
+
+Your project goes here! Before you submit, make sure your chunks are not displayed in your html output by using`echo = FALSE`. (Unless there is some particular chunk of code you want to highlight in your write-up.)
+
+You can add sections as you see fit. Make sure you have a section called Introduction at the beginning and a section called Conclusion at the end. The rest is up to you!  (For your project proposal, you do not need to have the Conclusion section.)
+
+
+**Note:**  When you are done with your project, knit one last time to create the .md file that is readable on github:  Click the arrow next to **Knit** and select **Knit to github_document**.
+Be sure to also push the resulting .md file to your repo.
+
+Delete these instructions from your final project .Rmd file!

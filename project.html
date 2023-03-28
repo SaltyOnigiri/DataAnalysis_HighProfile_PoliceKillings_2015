@@ -9,10 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="NAME HERE" />
+<meta name="author" content="Camryn Way" />
 
 
-<title>PROJECT TITLE</title>
+<title>Police Killings</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -298,23 +298,17 @@ overflow-y: auto;
 border: 1px solid #ddd;
 border-radius: 4px;
 }
-.tabset-dropdown > .nav-tabs > li.active:before {
-content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+content: "\e259";
 font-family: 'Glyphicons Halflings';
 display: inline-block;
 padding: 10px;
 border-right: 1px solid #ddd;
 }
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-content: "";
-border: none;
-}
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-content: "";
+content: "\e258";
 font-family: 'Glyphicons Halflings';
-display: inline-block;
-padding: 10px;
-border-right: 1px solid #ddd;
+border: none;
 }
 .tabset-dropdown > .nav-tabs > li.active {
 display: block;
@@ -355,13 +349,18 @@ display: none;
 
 
 
-<h1 class="title toc-ignore">PROJECT TITLE</h1>
-<h4 class="author">NAME HERE</h4>
-<h4 class="date">TODAY’S DATE</h4>
+<h1 class="title toc-ignore">Police Killings</h1>
+<h4 class="author">Camryn Way</h4>
+<h4 class="date">3/24/2023</h4>
 
 </div>
 
 
+<pre class="r"><code>library(tidyverse)</code></pre>
+<p>###Introduction My general research question is: What are the Overall
+Covid-19 Trends in 2020 and 2021?</p>
+<p>My data comes from the Covid Tracking Project</p>
+<pre class="r"><code>police_killings &lt;- readRDS(&quot;~/Meredith/Meredith Classes/3rd Year/Foundations of Data Science/big-project-SaltyOnigiri/data/police_killings.rds&quot;)</code></pre>
 <p>Your project goes here! Before you submit, make sure your chunks are
 not displayed in your html output by using<code>echo = FALSE</code>.
 (Unless there is some particular chunk of code you want to highlight in
@@ -370,6 +369,15 @@ your write-up.)</p>
 called Introduction at the beginning and a section called Conclusion at
 the end. The rest is up to you! (For your project proposal, you do not
 need to have the Conclusion section.)</p>
+<p>The outcome (dependent, response, Y) and predictor (independent,
+explanatory, X) variables you will use to answer your question. The
+comparison groups you will use, if applicable. Preliminary exploratory
+data analysis, including some summary statistics and visualizations,
+along with some explanation on how they help you learn more about your
+data. (You can add to these later as you work on your project.) The
+statistical method(s) that you believe will be useful in answering your
+question(s). (You can update these later as you work on your
+project.)</p>
 <p><strong>Note:</strong> When you are done with your project, knit one
 last time to create the .md file that is readable on github: Click the
 arrow next to <strong>Knit</strong> and select <strong>Knit to

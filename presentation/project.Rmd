@@ -18,27 +18,18 @@ pk <- readRDS("~/Meredith/Meredith Classes/3rd Year/Foundations of Data Science/
 ```
 
 #Introduction
-My general research question is:
-Specific:
-Does the observations location(state), age, ethnicity, gender, right to bear arms, or the police agency nearby affect the chance of being killed?
+Police killings in the United States have become a significant concern in recent years, prompting widespread public protests and calls for reform. The year 2015 was marked by several high-profile incidents of police violence, including the shooting of Walter Scott in South Carolina and the death of Freddie Gray in Baltimore. These incidents sparked a national conversation about police use of force, racial bias, and accountability. A general research question that arises from this context is: What were the patterns and trends of police killings in the United States in 2015, and how did they vary by demographic factors such as location, ethnicity, and age? This question is important because it sheds light on the prevalence and distribution of police violence in a particular year and provides a baseline for understanding how this issue has evolved over time. Answering this question could help inform policy discussions and interventions aimed at reducing police violence and improving community-police relations.
 
-General:
-What is causing police killings and can they be predicted?
+The police--killings dataset is populated utilizing two main sources. The first comes from an organization called the Guardian Media Group. This global news organisation launched an interactive database with info on Americans killed by police in the year 2015. The database, aptly named "The Counted", was built by combining media coverage, reader submissions, police and coroners' reports, voter registration data, witness testimony, court records, photographs, reliable open-sourced efforts like "Fatal Encounters" and "Killed by Police" as well as its own verification process by comparing it's own reporting with data that has been crowd sourced.  
 
-My data comes from an organization called the Guardian Media Group. This global news organisation launched an interactive database with info on Americans killed by police in the year 2015. The database, aptly named "The Counted", was built by combining media coverage, reader submissions, police and coroners' reports, voter registration data, witness testimony, court records, photographs, reliable open-sourced efforts like "Fatal Encounters" and "Killed by Police" as well as its own verification process by comparing it's own reporting with data that has been crowd sourced.  
-
-Each observation represents an individual who has been killed in America during the year 2015. The police_killings data set features 467 observations and 34 Columns and a few key variables of interest such as:
-
-- Gender
-- Raceethnicity
-- Age
-- lawenforcementagency: The agency the officer belonged to.
-- armed: What weapon was the individual armed with
-- state
+The second set of entries came from census data from the American Community Survey. Census data was calculated at the tract level from the 2015 5-year American Community Survey using the tables S0601 (demographics), S1901 (tract-level income and poverty), S1701 (employment and education) and DP03 (county-level income). Census tracts were determined by geocoding addresses to latitude/longitude using the Bing Maps and Google Maps APIs and then overlaying points onto 2014 census tracts.
 
 ``` {r pk_overview}
    glimpse(pk)
 ```
+
+Each observation represents an individual who has been killed in America during the year 2015. The police_killings data set features 467 observations and 34 Columns and a few key variables of interest such as the victim's age, race, gender, the location and circumstances of the incident, the type of weapon used, the officer's agency, among others.
+
 
 
 
@@ -71,7 +62,7 @@ pkmod <- pk %>%
   )
 ```
 
-```{r age_sum}
+```{r age_sum, echo = FALSE}
 pkmod %>% 
   filter(!is.na(age)) %>% 
   summarize(
@@ -83,7 +74,7 @@ pkmod %>%
 ```
 
 USMAP
-```{r, prop}
+```{r, prop, echo = FALSE}
 pkprop <- pk  %>% 
   group_by(state) %>% 
   summarise(n = n()) %>% 

@@ -293,7 +293,7 @@ plot_usmap(data = pkprop, values = "freg",  color = "#C9592E", labels=FALSE) +
   labs(title = "Proportion of Police Killings by State in 2015", caption = "Source: http://www.theguardian.com/thecounted.")
 ```
 
-The gray plots in the visualization indicate states (South/North Dakota, Vermont, Rhode Island) that did not provide data on police killings, which limits the completeness of the dataset. It is important to investigate why these states were unwilling to share information and determine if there are any underlying reasons for their lack of transparency. Furthermore, future research could benefit from examining specific states with high numbers of police killings, such as California and Texas, in order to gain a more detailed understanding of the patterns and trends in police violence in those areas.
+The gray plots in the visualization indicate states (South/North Dakota, Vermont, Rhode Island) that the current dataset(as of June 2,2015) does not have any information on police killings in the area, which limits the completeness of the dataset. Future research could benefit from examining specific states with high numbers of police killings, such as California and Texas, in order to gain a more detailed understanding of the patterns and trends in police violence in those areas.
 
 # Law Enforcement Summary
 ```{r}
@@ -302,8 +302,7 @@ pk %>%
   arrange(desc(n))
 ```
 
-The Los Angeles Police Department has the highest number of police killings in the dataset, followed by the Los Angeles County Sheriff's Department and the Oklahoma City Police Department. These findings reinforce the observation from the US Proportions map that California is a hotspot for police killings.
-It is important to investigate why certain law enforcement agencies and geographic regions have higher rates of police violence in order to identify potential contributing factors to develop targeted interventions.
+The Los Angeles Police Department has the highest number of police killings in the dataset, followed by the Los Angeles County Sheriff's Department and the Oklahoma City Police Department. These findings reinforce the observation from the US Proportions map that California is a hotspot for police killings. It is important to investigate why certain law enforcement agencies and geographic regions have higher rates of police violence in order to identify potential contributing factors to develop targeted interventions.
 
 
 

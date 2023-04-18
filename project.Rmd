@@ -15,7 +15,7 @@ library("ggmosaic")
 ```
 
 ```{r load-data, message=FALSE, echo = FALSE}
-pk <- readRDS("~/Meredith/Meredith Classes/3rd Year/Foundations of Data Science/big-project-SaltyOnigiri/data/police_killings.rds")
+pk <- read_rds("data/police_killings")
 ```
 
 # Introduction

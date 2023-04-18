@@ -1,0 +1,316 @@
+---
+title: "Final Project"
+author: "Camryn Way"
+date: "2023-04-18"
+output: html_document
+---
+
+```{r load-packages, message=FALSE, echo = FALSE}
+library(tidyverse)
+library(skimr)
+library(usmap)
+library(mosaicData)
+library("ggmosaic")
+library(scales)
+```
+
+```{r load-data, message=FALSE, echo = FALSE}
+pk <- read_rds("data/police_killings.rds")
+```
+
+# Introduction
+
+The year 2015 was marked by several high-profile incidents of police violence, including the shooting of Walter Scott in South Carolina and the death of Freddie Gray in Baltimore. These incidents sparked a national conversation about police use of force, racial bias, and accountability. A general research question that arises from this context is: What were the patterns and trends of police killings in the United States in 2015, and how did they vary by demographic factors such as location, ethnicity, and age? This question is important because it sheds light on the prevalence and distribution of police violence in a particular year and provides a baseline for understanding how this issue has evolved over time. Answering this question could help inform policy discussions and interventions aimed at reducing police violence and improving community-police relations.
+
+The police--killings dataset is populated utilizing two primary sources. The first comes from an organization called the Guardian Media Group. This global news organization launched an interactive database with info on Americans killed by police in the year 2015. The database, aptly named "The Counted", was built by combining media coverage, reader submissions, police and coroners' reports, voter registration data, witness testimony, court records, photographs, reliable open-sourced efforts like "Fatal Encounters" and "Killed by Police" as well as its own verification process by comparing its own reporting with data that has been crowdsourced.  
+
+The second set of entries came from the American Community Survey’s census data. Census data was calculated at the tract level from the 2015 5-year American Community Survey using tables S0601 (demographics), S1901 (tract-level income and poverty), S1701 (employment and education), and DP03 (county-level income). Census tracts were determined by geocoding addresses to latitude/longitude using the Bing Maps and Google Maps APIs and then overlaying points onto 2014 census tracts.
+
+Each observation represents an individual who was killed in America by police during the year 2015. The police_killings data set features `r nrow(pk)` observations and `r ncol(pk)` columns. A few key variables of interest are the location and circumstances of the incident, the type of weapon used, the officer's agency, and The victim's age, race, gender, etc.
+
+*Explanation of variables REDO*
+
+# Description of Statistical Methods and Their Usefulness
+
+*Summarize()* : The summarize function in R is used to aggregate data by groups and compute summary statistics. In the context of my research question, I can use summarize to calculate summary statistics such as the mean, median, and range of ages of individuals who were killed by police in the United States in 2015.
+
+  - By analyzing these summary statistics, I can identify whether there are any trends or patterns in police killings based on age. For example, I could examine whether there is a significant difference in the age distribution of individuals who were killed by police in areas with high or low residential income.
+
+*Histogram()* + *Density()*: The histogram function in R can be used to visualize the distribution of age among individuals who were killed by police in the United States in 2015. By examining the shape of the histogram, I can gain insights into the distribution of age and identify any patterns or trends.
+
+- For example, a histogram may show that the age distribution of individuals killed by police is heavily skewed towards younger ages. This could suggest that police violence is more prevalent among younger individuals. On the other hand, if the age distribution is more evenly spread out, this could suggest that police violence affects individuals of all ages equally.
+
+*Boxplot()*: Using the boxplot function in R can help answer the general research question of what were the patterns and trends of police killings in the United States in 2015, and how did they vary by demographic factors such as location, ethnicity, and age.
+
+ - In terms of age, I could use the boxplot function to create a boxplot of the age distribution of individuals who were killed by police in the United States in 2015. The boxplot would provide information about the central tendency, variability, and distribution of age among the individuals who were killed by police.
+
+- Additionally, I could use the boxplot function to compare the age distribution of individuals who were killed by police across different demographic groups, such as by ethnicity or geographic regions. By comparing the median ages and quartiles for each group, I could identify whether there are any age-related differences in police violence across these different demographic factors.
+
+- For example, if the median age of individuals killed by police is higher for certain ethnic groups than others, this could suggest that police violence affects different groups disproportionately. Similarly, if the age distribution of individuals killed by police is different in urban versus rural areas, this could suggest that the factors contributing to police violence vary across different locations.
+
+
+*Bar()*: Bar plots in R could be used to visually display and compare the frequency or count of different variables related to police killings, such as the number of victims by race or location. This could help answer the research question by providing a clear and concise summary of the distribution of police killings across different demographic factors.
+
+- For example, I could create a bar plot showing the number of police killings by race in 2015. This would allow for easy comparison of the frequency of police killings across different racial groups. Similarly, bar plots could be used to display the number of police killings in different geographic regions or by age group.
+
+- Using bar plots in R can be particularly useful because they provide a simple and easy-to-read visualization of the data, making it easy to compare different variables or groups. Bar plots can also be customized to display different types of data, such as percentages or proportions, which can provide additional insight into the distribution of the data.
+
+
+*Count()*: The count function in R could be used to summarize and analyze the frequency or count of different variables related to police killings, such as the number of victims by race or location. This could help answer the research question by providing a numerical summary of the distribution of police killings across different demographic factors.
+
+- For example, researchers could use the dplyr package in R to group the police killings data by race and then use the count function to calculate the number of victims for each racial group. This would provide a summary of the frequency of police killings for each racial group, allowing for easy comparison and analysis.
+
+- Using the count function in R can be particularly useful because it provides a simple and easy-to-read summary of the data, making it easy to compare different variables or groups. The count function can also be combined with other statistical functions in R to perform more complex analyses of the data.
+
+
+*Plot_usmap()*: The plot_usmap function in R, can be used to visualize geographic data related to police killings in the United States. This could help answer the research question by providing a clear and easy-to-understand visualization of the geographic distribution of police violence.
+
+- For example, I could use the function in R to create a choropleth map showing the number of police killings in each state in 2015. This would allow for easy comparison of the frequency of police violence across different states and could help identify any geographic patterns or trends in police violence.
+
+- Using the plot_usmap function in R can be particularly useful because it provides a visual representation of the data that can be easily interpreted by viewers. Additionally, the plot_usmap function can be customized to display different types of data, such as proportions or rates, which can provide additional insight into the distribution of police violence.
+
+
+*IQR()*: The IQR (Interquartile Range) function in R can be used to identify the spread and variability of data related to police killings. This could help answer the research question by providing a quantitative summary of the variability of the data across different demographic factors.
+
+- For example, researchers could use the IQR function in R to calculate the interquartile range of the age distribution of victims of police killings in 2015. The interquartile range is the range between the 25th and 75th percentiles of the data and can provide a measure of the spread of the data. This could help identify whether there is a large variation in the age of victims of police killings and whether this varies by demographic factors such as race or location.
+
+- Similarly, the IQR function could be used to calculate the interquartile range of other variables related to police killings, such as the number of victims in different geographic regions. This could help identify whether there are significant differences in the spread of the data across different regions, which could indicate different patterns or trends in police violence.
+
+- Using the IQR function in R can be particularly useful because it provides a quantitative measure of the spread of the data, which can help identify any patterns or trends that may not be apparent from visualizations or summary statistics. Additionally, the IQR function can be combined with other statistical functions in R to perform more complex analyses of the data.
+
+# Data Exploration
+
+# Age
+``` {r chk_na, echo = FALSE, results='hide'}
+   sum(is.na(pk))
+```
+# Summary of Age
+```{r age_clean, echo = FALSE}
+pkmod <- pk %>%
+  mutate(
+    age = if_else(age == "Unknown", NA, age),
+    age = as.numeric(age)
+  )
+```
+
+```{r age_hist, echo = FALSE, warning=FALSE}
+ggplot(pkmod, aes(x=age)) + 
+  geom_histogram(binwidth = 5, fill = "#C9592E", alpha = 0.5) + 
+  labs(title="Age Distribution of Individuals Killed by Police in 2015", x="Age", y="Count") +
+  theme_light() 
+```
+
+The age distribution in the dataset is characterized by a right-skewed, unimodal shape, indicating that the majority of individuals who were killed by police were relatively young. The central tendency of the age distribution can be summarized using the median, which is 35 years old.
+
+```{r age_sum, echo = FALSE}
+pkmod %>% 
+  filter(!is.na(age)) %>% 
+  summarize(
+    min_age = min(age),
+    mean_age = mean(age),
+    median_age = median(age),
+    max_age = max(age)
+  )
+```
+
+The interquartile range (IQR) of the age distribution in the dataset is 17 years, which indicates a relatively moderate spread of ages among the individuals who were killed by police. However, it is important to note that there may be other factors, such as race, ethnicity, or location, that contribute to a wider range of police violence and should be further examined in future analyses.
+
+```{r age_iqr, echo = FALSE,}
+iqr_age <- IQR(pkmod$age, na.rm = TRUE)
+iqr_age
+```
+
+The dataset includes a few notable outliers, such as Louis Becker and Richard Weaver, who were 87 and 83 years old, respectively, at the time of their deaths. While these cases are relatively rare, they underscore the importance of considering age as a potential demographic factor that may influence the risk of police violence.
+
+```{r age_out, echo = FALSE,}
+pkmod %>% 
+  arrange(desc(age)) %>% 
+  select(name, age, gender)
+```
+
+
+```{r age_den, echo = FALSE, warning=FALSE}
+ggplot(pkmod, aes(x=age)) +
+  geom_density(fill="#C9592E", alpha=0.5) +
+  labs(title="Density Plot of Age Distribution",
+       subtitle = "Among Individuals Killed by Police in 2015",
+       x="Age", 
+       y="Density"
+      )
+```
+
+```{r gen_age, echo = FALSE, warning=FALSE}
+ggplot(pkmod, aes(x=gender, y=age)) +
+  geom_boxplot(fill="#C9592E", alpha=0.5) +
+  labs(title="Age Distribution by Gender",
+       subtitle = "Among Individuals Killed by Police in 2015",
+       x="Gender", 
+       y="Age"
+       ) 
+```
+
+Analysis of the box plot reveals that males have a distribution with a larger range and a greater number of outliers compared to females. This pattern is particularly evident when examining the age of the individuals in the dataset, where the oldest male (Louis Becker) was 87 years old at the time of his death, while the oldest female (Hue Dang) was only 63 years old. These differences may reflect underlying demographic and societal factors that influence the likelihood of police violence and should be further investigated to better understand the root causes of these disparities.
+
+```{r age_grp, echo = FALSE}
+pk_age_grp <- pkmod %>%
+  mutate(age_group = cut(age, breaks = c(0, 18, 25, 35, 50, Inf), 
+                         labels = c("Under 18", "18-25", "26-35", "36-50", "Over 50")))
+```
+
+```{r age_inc, echo = FALSE, warning=FALSE}
+ggplot(pk_age_grp, aes(x = h_income, y = age_group)) +
+  geom_boxplot(fill="#C9592E", alpha=0.5) +
+  scale_y_discrete(limits = c(NA, "Under 18", "18-25", "26-35", "36-50", "Over 50")) +
+  labs(title="Age Groups by Household Income",
+       subtitle = "Among Individuals Killed by Police in 2015",
+       x="Household Income", 
+       y="Age Group") +
+  scale_x_continuous(labels = dollar_format(prefix="$", suffix=""), 
+                     breaks = seq(0, 500000, 50000))
+```
+
+*DESCRIBE AGE BY INCOME*
+
+# Race/Ethnicity Summary
+
+```{r race_hist, echo = FALSE, warning=FALSE}
+options(scipen = 200000) 
+pk %>%
+mutate(limit_race = fct_lump_n(raceethnicity, 3)) %>% 
+mutate(limit_race = fct_relevel(limit_race, "Other")) %>% 
+
+   ggplot(aes(x = h_income, y = limit_race, fill = limit_race)) +
+    geom_boxplot() +
+      labs(
+       x = "Average Household Income",
+       y = NULL,
+       title = "Average Household Income by the Three Most Common Races",
+       subtitle = "Among Individuals Killed by Police in 2015"
+    ) +
+  scale_fill_discrete(name="Race") +
+  scale_x_continuous(labels = dollar_format(prefix="$", suffix=""), 
+                     breaks = seq(0, 500000, 50000))
+```
+
+Hispanic/Latino households have the lowest income levels among the demographic groups analyzed. Black households show a larger interquartile range (IQR) in their income distribution compared to other racial groups. White households have the largest income range, followed by black households. The United States Census Bureau estimates the real median household income in the United States was $55,775. Both the Mean and median household income for all people who have been killed in America by police are below that average at 46,627.18 and 42,759 respectively. Similarly the mean for all of our racial groups in the above distribution are below 50,000 (However, the mean does get affected by outliers).
+
+```{r inc_sum, echo = FALSE}
+pk %>% 
+  filter(!is.na(h_income)) %>% 
+  summarize(
+    min_hinc = min(h_income),
+    mean_hinc = mean(h_income),
+    median_hinc = median(h_income),
+    max_hinc = max(h_income)
+  )
+```
+
+
+```{r gen_rac, echo = FALSE}
+ggplot(data = pk, mapping = aes(y = gender, fill = raceethnicity)) +
+geom_bar(position = "fill")+
+labs(
+y = "",
+x = "Proportion",
+fill = "Ethnicity",
+title = "Distribution of Ethnicity by Gender",
+subtitle = "Among Individuals Killed by Police in 2015"
+) +
+  theme_minimal() +
+  scale_fill_viridis_d() +
+  theme(
+legend.position = "bottom",
+legend.key.size = unit(0.2, "cm")
+) +
+guides(fill = guide_legend(nrow = 2, byrow = TRUE))
+```
+
+```{r count, echo = FALSE}
+pk %>% 
+  count(raceethnicity) %>% 
+  arrange(desc(n))
+```
+
+This bar chart illustrates the distribution of police killings by gender and ethnicity, based on a sample of 467 individuals. White individuals accounted for the highest proportion of police killings among both men and women, representing 50% of the total distribution. It is also definitely worth noting that the distribution of ethnicity is different for males and females. There are alot more male Hispanc/Latino men killed than women. There is also a higher proportion of black women who were killed in comparison to black men. 
+
+# Gender
+```{r gen_count, echo = FALSE}
+pk %>% 
+  count(gender) %>% 
+  arrange(desc(n))
+```
+
+The dataset includes only 22 cases of women being killed, which suggests a significant under-representation of women among police killings. This under-representation raises the possibility of gender profiling in cases where women are involved in police interactions that escalate to deadly force.
+
+
+```{r gen_prop1, echo = FALSE}
+ggplot(pk, mapping = aes(y = gender, fill = cause)) +
+  geom_bar(position = "fill")+
+    labs(
+      y = "",
+      x = "Proportion",
+      fill = "Cause",
+      title = "Distribution of Cause by Gender",
+      subtitle = "Among Individuals Killed by Police in 2015"
+  ) +
+  theme_minimal() +
+  scale_fill_viridis_d() +
+  theme(
+    legend.position = "bottom",
+    legend.key.size = unit(0.2, "cm")
+  ) +
+guides(fill = guide_legend(nrow = 2, byrow = TRUE))
+```
+
+The majority of individuals in the dataset were killed by gunshot, which is a common method used by law enforcement.However, it is important to investigate the proportion of these individuals who were armed at the time of the incident.
+
+```{r gen_prop2, echo = FALSE}
+ggplot(pk, mapping = aes(y = gender, fill = armed)) +
+  geom_bar(position = "fill")+
+    labs(
+      y = "",
+      x = "Proportion",
+      fill = "Armed",
+      title = "Proportion of Police Killings by Gender and Armed Status in 2015"
+  ) +
+  theme_minimal() +
+  scale_fill_viridis_d() +
+  theme(
+    legend.position = "bottom",
+    legend.key.size = unit(0.2, "cm")
+  ) +
+guides(fill = guide_legend(nrow = 2, byrow = TRUE))
+```
+
+The data shows that a higher proportion of women than men were carrying a firearm at the time of their killing. This information is relevant to answering the general research question because it suggests a potential association between being armed and being perceived as a threat.
+
+# Summarize State Killings
+```{r, prop, echo = FALSE}
+pkprop <- pk  %>% 
+  group_by(state) %>% 
+  summarise(n = n()) %>% 
+  mutate(freg = n/ sum(n)) %>% 
+  arrange(desc(n))
+```
+
+```{r usmap, echo = FALSE}
+plot_usmap(data = pkprop, values = "freg",  color = "#C9592E", labels=FALSE) + 
+  scale_fill_continuous( low = "white", high = "#C9592E", 
+                         name = "Police Killings", label = scales::comma
+  ) + 
+  theme(legend.position = "right") + 
+  theme(panel.background = element_rect(colour = "black")) + 
+  labs(title = "Proportion of Police Killings by State in 2015", caption = "Source: http://www.theguardian.com/thecounted.")
+```
+
+The gray plots in the visualization indicate states (South/North Dakota, Vermont, Rhode Island) that the current dataset(as of June 2,2015) does not have any information on police killings in the area, which limits the completeness of the dataset. Future research could benefit from examining specific states with high numbers of police killings, such as California and Texas, in order to gain a more detailed understanding of the patterns and trends in police violence in those areas.
+
+# Law Enforcement Summary
+```{r}
+pk %>% 
+  count(lawenforcementagency) %>% 
+  arrange(desc(n))
+```
+
+The Los Angeles Police Department has the highest number of police killings in the dataset, followed by the Los Angeles County Sheriff's Department and the Oklahoma City Police Department. These findings reinforce the observation from the US Proportions map that California is a hotspot for police killings. It is important to investigate why certain law enforcement agencies and geographic regions have higher rates of police violence in order to identify potential contributing factors to develop targeted interventions.
+

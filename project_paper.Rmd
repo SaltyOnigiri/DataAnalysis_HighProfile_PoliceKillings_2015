@@ -12,6 +12,11 @@ library(usmap)
 library(mosaicData)
 library("ggmosaic")
 library(scales)
+library(broom)
+library(rsample)
+library(GGally)
+library(caret)
+library(yardstick)
 ```
 
 ```{r load-data, message=FALSE, echo = FALSE}
@@ -29,6 +34,27 @@ The second set of entries came from the American Community Survey’s census dat
 Each observation represents an individual who was killed in America by police during the year 2015. The police_killings data set features `r nrow(pk)` observations and `r ncol(pk)` columns. A few key variables of interest are the location and circumstances of the incident, the type of weapon used, the officer's agency, and The victim's age, race, gender, etc.
 
 *Explanation of variables REDO*
+The dependent and predictor variables that I will use to answer my general research question are as follows:
+
+- The outcome (dependent, response, Y) variable are the individuals killed by police officers in 2015.
+
+- The independent variables are numerous and include factors such as the victim's age, race, gender, the location and circumstances of the incident, the type of weapon used, among others.
+
+- Additionally, One major comparison group I'm interested in is whether we can evaluate the effect of different types of police forces on police killings, one comparison group could be local police departments versus state or federal law enforcement agencies.(However there are 377 different agencies in this data set and I've yet to find a data set I can join, so this may be removed later) 
+
+In order to answer these questions, I plan to direct my focus (currently) on the following variables:
+
+- Age
+
+- Race/Ethnicity
+
+- State
+
+- Armed
+
+- Gender
+
+- Household Income
 
 # Description of Statistical Methods and Their Usefulness
 
@@ -169,7 +195,7 @@ ggplot(pk_age_grp, aes(x = h_income, y = age_group)) +
                      breaks = seq(0, 500000, 50000))
 ```
 
-*DESCRIBE AGE BY INCOME*
+We see a general trend with indivisuals under 18 having the lowest income range(Excluding NA) among the demographic groups analyzed and indivisuals over 50 having the highest income range. indivisuals 18 to 25 show a larger interquartile range (IQR) in their income distribution compared to other age groups. 
 
 # Race/Ethnicity Summary
 
@@ -192,7 +218,7 @@ mutate(limit_race = fct_relevel(limit_race, "Other")) %>%
                      breaks = seq(0, 500000, 50000))
 ```
 
-Hispanic/Latino households have the lowest income levels among the demographic groups analyzed. Black households show a larger interquartile range (IQR) in their income distribution compared to other racial groups. White households have the largest income range, followed by black households. The United States Census Bureau estimates the real median household income in the United States was $55,775. Both the Mean and median household income for all people who have been killed in America by police are below that average at 46,627.18 and 42,759 respectively. Similarly the mean for all of our racial groups in the above distribution are below 50,000 (However, the mean does get affected by outliers).
+Hispanic/Latino households have the lowest income range among the demographic groups analyzed. Black households show a larger interquartile range (IQR) in their income distribution compared to other racial groups. White households have the largest income range, followed by black households. The United States Census Bureau estimates the real median household income in the United States was $55,775. Both the Mean and median household income for all people who have been killed in America by police are below that average at 46,627.18 and 42,759 respectively. Similarly the mean for all of our racial groups in the above distribution are below 50,000 (However, the mean does get affected by outliers).
 
 ```{r inc_sum, echo = FALSE}
 pk %>% 
@@ -314,3 +340,181 @@ pk %>%
 
 The Los Angeles Police Department has the highest number of police killings in the dataset, followed by the Los Angeles County Sheriff's Department and the Oklahoma City Police Department. These findings reinforce the observation from the US Proportions map that California is a hotspot for police killings. It is important to investigate why certain law enforcement agencies and geographic regions have higher rates of police violence in order to identify potential contributing factors to develop targeted interventions.
 
+# Linear Models
+Is there a relationship between Household Income and age?
+```{r lin, echo = FALSE, warning=FALSE}
+ggplot(pkmod, aes(x = age, y = h_income)) +
+  geom_point() +
+  geom_smooth(method = "lm") +
+labs(
+title = "Linear Model between Household Income and Age",
+x = "Age",
+y = "Household Income"
+)
+```
+
+
+
+According to this graph there is minimal relation between the household income and age of individuals killed by police in America in 2015. 
+
+
+# Logistic Reggression
+
+Response Variable Race/Ethnicity
+```{r lump_race, echo = FALSE, warning=FALSE}
+pkfilt <- pk_age_grp %>% 
+filter(raceethnicity != "Unknown")
+minority_categories <- c("Asian/Pacific Islander",
+                         "Black",
+                         "Hispanic/Latino",
+                         "Native American")
+
+```
+
+```{r, echo = FALSE, warning=FALSE}
+pk_race_cat <- pkfilt %>%
+  mutate(minority = factor(ifelse(raceethnicity %in% minority_categories, 0, 1)))
+```
+
+```{r tbble, echo = FALSE, warning=FALSE}
+pk_race_cat  %>% 
+  filter(!is.na(age)) %>% 
+  group_by(minority) %>%
+  summarize(
+  mean_age = mean(age))
+```
+
+The average mean age of racial groups considered minorities(ie. Asian/Pacific Islander, Black, Hispanic/Latino", and Native American) is 33.5 versus non minorities(ie predominately white) at 40.5. 
+
+```{r, echo = FALSE, warning=FALSE}
+pk_race_cat %>%
+  ggplot(aes(x = age_group, fill = minority)) +
+  geom_bar(position = "fill") +
+  labs(
+    x = "Age Group", 
+    fill = "Minority", 
+    y = NULL,
+    title = 'Minority vs. Age Group'
+    ) +
+   scale_fill_discrete(labels = c("Yes", "No")) 
+```
+
+
+```{r, echo = FALSE, warning=FALSE}
+m_fit <- glm(minority ~ age + gender + state + armed + cause + h_income + county_income, data = pk_race_cat, family = "binomial")
+tidy(m_fit)
+```
+
+Our p-values only seem significant for h_income, age, and county_income.
+
+```{r, echo = FALSE, warning=FALSE}
+m_fit2 <- glm(minority ~ age  + h_income + county_income, data = pk_race_cat, family = "binomial")
+tidy(m_fit2)
+```
+
+After removing gender, state, armed, and cause from our model, I can see that all p-values are significant. Looking at the adjustd r^2 value of both of our models.
+
+```{r,echo = FALSE, warning=FALSE}
+summary(m_fit)
+summary(m_fit2)
+anova(m_fit,m_fit2)
+```
+
+
+Model1: AIC: 563.36
+Model2: AIC: 554.47
+
+A Lower AIC means that a model should have improved prediction. Frequently adding more variables decreases predictive accuracy and in that case the model with higher R2 will have a higher (worse) AIC.The Anova Test also confirms the improves AIC between the two models.
+
+```{r eval = FALSE, message = FALSE, warning = FALSE}
+pk_race_cat %>%
+  select(minority, age, h_income, county_income) %>% 
+  ggpairs()
+```
+
+There does appear to be some correlation between Household Income and County Income (0.461) which is to be expected. However, I dont think its high enough to remove it from the model.
+
+
+# Predictions Based on Just Age
+
+```{r, echo = FALSE, warning=FALSE}
+minority_fit <- glm(minority ~ age, data = pk_race_cat, family = "binomial")
+tidy(minority_fit)
+```
+
+$\widehat{minority} = -1.6630 + 0.04769age$ Minorities
+
+
+```{r, echo = FALSE, warning=FALSE}
+newdata <- tibble(age = c(18, 37, 52))
+minority_fit %>% predict(newdata, type = "response" )
+```
+The probability that an person who is 18 years old is a minority is 0.309.
+The probability that an person who is 37 years old is a minority is 0.525. 
+The probability that an person who is 52 years old is a minority is 0.694.
+
+```{r, echo = FALSE, warning=FALSE}
+pk_race_cat %>%
+mutate(probminority = if_else(minority == "0", 0, 1)) %>%
+ggplot(aes(x = age, y = probminority)) +
+geom_point(alpha = 0.5) +
+geom_smooth(method = "glm", method.args = list(family = "binomial")) +
+labs(
+title = "Logistic Regression Model for Minority By Age",
+x = "Age",
+y = "Probability of Being Labeled a Minority"
+)
+```
+
+I can see a running trend where the older you get, the more likely you are to be a minority.
+
+
+```{r, echo = FALSE, warning=FALSE}
+set.seed(2366) 
+race_split <- initial_split(pk_race_cat, prop = 0.80)
+
+train_data <- training(race_split)
+test_data <- testing(race_split)
+
+glimpse(train_data)
+glimpse(test_data)
+```
+
+
+```{r, echo = FALSE, warning=FALSE}
+minority_pred <- predict(m_fit2, test_data, type = "response")
+minority_pred <- as_tibble(minority_pred) %>%
+  rename(pred = value)
+
+minority_pred <- minority_pred %>%
+  bind_cols(test_data %>% select(minority, age, county_income, h_income))
+minority_pred
+```
+
+
+```{r, echo = FALSE, warning=FALSE}
+pred <- predict(m_fit2, test_data)
+pred_num <- ifelse(pred > 0.5, 1, 0)  #Set probability cut-off at 0.5
+pred_num <-factor(pred_num, levels = c(0, 1))
+confusionMatrix(pred_num, test_data$minority)
+
+minority_pred %>%
+  roc_curve(truth = minority, pred, event_level = "second") %>%
+  autoplot() +
+labs(
+title = "True Positive Rate vs. False Positive Rate for Minority",
+x = "1-Specificity",
+y = "Sensitivity"
+)
+
+minority_pred %>%
+  roc_auc(truth = minority, pred, event_level = "second")
+```
+
+
+# Conclusion
+In the conclusion that you write for your final paper, be sure to circle back to your question(s) of interest and discuss what your overall findings are
+
+Question of interest: What were the patterns and trends of police killings in the United States in 2015, and how did they vary by demographic factors such as location, ethnicity, and age?
+
+The Guardian is a newspaper artcle so more may be covered on nonminorities in general.

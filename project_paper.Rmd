@@ -17,10 +17,18 @@ library(rsample)
 library(GGally)
 library(caret)
 library(yardstick)
+set.seed(2366) 
 ```
 
 ```{r load-data, message=FALSE, echo = FALSE}
 pk <- read_rds("data/police_killings.rds")
+Colleges <- read_csv("data/Colleges.csv")
+```
+
+```{r}
+# join column 'region' from Colleges into pk based on the matching 'states' column
+pk <- pk %>% left_join(Colleges %>% select(state, region), by = "state")
+pk
 ```
 
 # Introduction
@@ -33,14 +41,9 @@ The second set of entries came from the American Community Survey’s census dat
 
 Each observation represents an individual who was killed in America by police during the year 2015. The police_killings data set features `r nrow(pk)` observations and `r ncol(pk)` columns. A few key variables of interest are the location and circumstances of the incident, the type of weapon used, the officer's agency, and The victim's age, race, gender, etc.
 
-*Explanation of variables REDO*
-The dependent and predictor variables that I will use to answer my general research question are as follows:
+## Explanation of variables
 
-- The outcome (dependent, response, Y) variable are the individuals killed by police officers in 2015.
-
-- The independent variables are numerous and include factors such as the victim's age, race, gender, the location and circumstances of the incident, the type of weapon used, among others.
-
-- Additionally, One major comparison group I'm interested in is whether we can evaluate the effect of different types of police forces on police killings, one comparison group could be local police departments versus state or federal law enforcement agencies.(However there are 377 different agencies in this data set and I've yet to find a data set I can join, so this may be removed later) 
+The dependent variable for the predictive model is Race/Ethnicity split into the categories minority, and non-minority. The independent variables are numerous and include factors such as the victim's age, household income, county income, gender, the location and circumstances of the incident, the type of weapon used, among others.
 
 In order to answer these questions, I plan to direct my focus (currently) on the following variables:
 
@@ -55,6 +58,7 @@ In order to answer these questions, I plan to direct my focus (currently) on the
 - Gender
 
 - Household Income
+
 
 # Description of Statistical Methods and Their Usefulness
 
@@ -288,7 +292,7 @@ ggplot(pk, mapping = aes(y = gender, fill = cause)) +
 guides(fill = guide_legend(nrow = 2, byrow = TRUE))
 ```
 
-The majority of individuals in the dataset were killed by gunshot, which is a common method used by law enforcement.However, it is important to investigate the proportion of these individuals who were armed at the time of the incident.
+The majority of individuals in the dataset were killed by gunshot, which is a common method used by law enforcement. However, it is important to investigate the proportion of these individuals who were armed at the time of the incident.
 
 ```{r gen_prop2, echo = FALSE}
 ggplot(pk, mapping = aes(y = gender, fill = armed)) +
@@ -355,7 +359,7 @@ y = "Household Income"
 
 
 
-According to this graph there is minimal relation between the household income and age of individuals killed by police in America in 2015. 
+Based on the presented graph, it can be observed that there is a negligible correlation between the age and household income of the individuals who were killed by the police in the United States in 2015. This suggests that a linear model may not be appropriate to describe this relationship. As a matter of fact, I experimented with several linear models to explore potential relationships but discovered a comparable absence of correlation.
 
 
 # Logistic Reggression
@@ -384,7 +388,7 @@ pk_race_cat  %>%
   mean_age = mean(age))
 ```
 
-The average mean age of racial groups considered minorities(ie. Asian/Pacific Islander, Black, Hispanic/Latino", and Native American) is 33.5 versus non minorities(ie predominately white) at 40.5. 
+The mean age of minority racial groups, including Asian/Pacific Islander, Black, Hispanic/Latino, and Native American, is 33.5, which is lower than the mean age of non-minority groups, predominantly white, at 40.5.
 
 ```{r, echo = FALSE, warning=FALSE}
 pk_race_cat %>%
@@ -400,19 +404,27 @@ pk_race_cat %>%
 ```
 
 
+It is apparent that a larger number of minorities who were killed by the police in 2015 fell within the 18-25 age group, whereas more non-minorities were killed when they were over 50 or their age was unknown.
+
+# Model Creation
+
+The objective was to develop two models: one based on significant p-values and the other containing all potential useful interactions for the analysis.
+
 ```{r, echo = FALSE, warning=FALSE}
-m_fit <- glm(minority ~ age + gender + state + armed + cause + h_income + county_income, data = pk_race_cat, family = "binomial")
+m_fit <- glm(minority ~ age + armed + region + urate + college + cause + h_income + county_income, data = pk_race_cat, family = "binomial")
 tidy(m_fit)
 ```
 
-Our p-values only seem significant for h_income, age, and county_income.
+After analyzing the data, It was found that the p-values were only significant for h_income, age, county_income, and urate. We also included region in the analysis as certain regions appeared to have a significant impact.
+$\widehat{minority} = -16.818 + 0.058age + 13.947armedFirearm + 13.410armedKnife + 13.208No + 13.52armedNon-lethal firearm + 14.027armedOther + 14.163armedUnknown + 13.104armedVehicle + 	0.567regionMidwest - 0.125regionNortheast	- 0.167regionSouth - 0.710regionSouthwest - 0.377regionWest - 4.940urate + 0.602college + 2.371causeGunshot + 1.308causeStruck by vehicle + 1.318causeTaser + 2.223causeUnknown + 	0.00001939387h_income - 0.00002999880county_income$ 
+
 
 ```{r, echo = FALSE, warning=FALSE}
-m_fit2 <- glm(minority ~ age  + h_income + county_income, data = pk_race_cat, family = "binomial")
+m_fit2 <- glm(minority ~ age  + h_income + region + cause +  urate + county_income, data = pk_race_cat, family = "binomial")
 tidy(m_fit2)
 ```
 
-After removing gender, state, armed, and cause from our model, I can see that all p-values are significant. Looking at the adjustd r^2 value of both of our models.
+Upon removing gender, state, armed, and cause from the model, I observed that all p-values became significant
 
 ```{r,echo = FALSE, warning=FALSE}
 summary(m_fit)
@@ -421,37 +433,47 @@ anova(m_fit,m_fit2)
 ```
 
 
-Model1: AIC: 563.36
-Model2: AIC: 554.47
+- m_fit: AIC: 3518.8 
+- m_fit2: AIC: 3579.1 
 
-A Lower AIC means that a model should have improved prediction. Frequently adding more variables decreases predictive accuracy and in that case the model with higher R2 will have a higher (worse) AIC.The Anova Test also confirms the improves AIC between the two models.
+Based on the AIC values obtained, we can see that the larger model (m_fit) has a lower AIC than the smaller model (m_fit2), despite some of the interactions not being significant based on the p-values. A lower AIC suggests that the larger model should have better predictive ability. While adding more variables can sometimes decrease predictive accuracy, the Anova Test confirms the improvement in AIC between the two models. Therefore, we can conclude that variables such as college and armed are useful for the model despite some of the interactions not being significant based on the p-values.
 
-```{r eval = FALSE, message = FALSE, warning = FALSE}
+```{r, message = FALSE, warning = FALSE}
 pk_race_cat %>%
   select(minority, age, h_income, county_income) %>% 
   ggpairs()
 ```
 
-There does appear to be some correlation between Household Income and County Income (0.461) which is to be expected. However, I dont think its high enough to remove it from the model.
+```{r, message = FALSE, warning = FALSE}
+pk_race_cat %>%
+  select(minority, urate, college, region) %>% 
+  ggpairs()
+```
+
+There is a moderate positive correlation (0.461) between Household Income and County Income, which is expected. However, I do not believe it is significant enough to warrant its removal from the model.  Overall the correlations I was worried about, such as college/urate and household income/county income, were not high enough to make any changes to the model.
 
 
 # Predictions Based on Just Age
+
+By far, age seems to be the most significant interaction based on p-value. Breaking down the specific connection between age and minority may be worthwhile.
 
 ```{r, echo = FALSE, warning=FALSE}
 minority_fit <- glm(minority ~ age, data = pk_race_cat, family = "binomial")
 tidy(minority_fit)
 ```
 
-$\widehat{minority} = -1.6630 + 0.04769age$ Minorities
+$\widehat{minority} = -1.6630 + 0.04769age$ 
 
 
 ```{r, echo = FALSE, warning=FALSE}
 newdata <- tibble(age = c(18, 37, 52))
 minority_fit %>% predict(newdata, type = "response" )
 ```
-The probability that an person who is 18 years old is a minority is 0.309.
-The probability that an person who is 37 years old is a minority is 0.525. 
-The probability that an person who is 52 years old is a minority is 0.694.
+Based on the analysis, the following probabilities were observed:
+
+- The probability that a person who is 18 years old is a minority is 0.309.
+- The probability that a person who is 37 years old is a minority is 0.525.
+- The probability that a person who is 52 years old is a minority is 0.694.
 
 ```{r, echo = FALSE, warning=FALSE}
 pk_race_cat %>%
@@ -466,11 +488,11 @@ y = "Probability of Being Labeled a Minority"
 )
 ```
 
-I can see a running trend where the older you get, the more likely you are to be a minority.
 
+Based on the logistic regression model, it appears that age has a significant impact on the likelihood of being a minority. As age increases, the probability of being a minority also tends to increase. This trend highlights the importance of age as a predictor variable in the model. Therefore, we can conclude that age plays a crucial role in determining the likelihood of being a minority in the population under study.
 
+# Back to Full Model Prediction Building
 ```{r, echo = FALSE, warning=FALSE}
-set.seed(2366) 
 race_split <- initial_split(pk_race_cat, prop = 0.80)
 
 train_data <- training(race_split)
@@ -480,24 +502,45 @@ glimpse(train_data)
 glimpse(test_data)
 ```
 
+Initially, I divided the data into two sets: the Training set and the Testing set. The Training set, which comprises the majority of the data (usually 80%), is used for developing the model. It is essential to spend most of the time using the Training set to build the model. On the other hand, the Testing set, which contains the remaining data (usually 20%), is held in reserve to evaluate the effectiveness of one or two selected models. It is crucial to only look at the Testing set once, as it should not be a continuous part of the modeling process.
 
+# Larger Model
 ```{r, echo = FALSE, warning=FALSE}
-minority_pred <- predict(m_fit2, test_data, type = "response")
+minority_pred <- predict(m_fit, test_data, type = "response")
 minority_pred <- as_tibble(minority_pred) %>%
   rename(pred = value)
 
 minority_pred <- minority_pred %>%
-  bind_cols(test_data %>% select(minority, age, county_income, h_income))
+bind_cols(test_data %>% select(minority, age, region, urate, college, county_income, h_income, cause, armed))
 minority_pred
 ```
 
+```{r, echo = FALSE, warning=FALSE}
+pred_num <- ifelse(minority_pred$pred > 0.5, 1, 0)
+pred_num <- factor(pred_num, levels=(c(0,1)))
+confusionMatrix(pred_num,test_data$minority)
+```
+
+# Smaller Model
+```{r, echo = FALSE, warning=FALSE}
+minority_preda <- predict(m_fit2, test_data, type = "response")
+minority_preda <- as_tibble(minority_preda) %>%
+  rename(pred = value)
+
+minority_preda <- minority_preda %>%
+bind_cols(test_data %>% select(minority, age, region, urate, college, county_income, h_income))
+minority_preda
+```
 
 ```{r, echo = FALSE, warning=FALSE}
-pred <- predict(m_fit2, test_data)
-pred_num <- ifelse(pred > 0.5, 1, 0)  #Set probability cut-off at 0.5
-pred_num <-factor(pred_num, levels = c(0, 1))
-confusionMatrix(pred_num, test_data$minority)
+pred_numa <- ifelse(minority_preda$pred > 0.5, 1, 0)
+pred_numa <- factor(pred_numa, levels=(c(0,1)))
+confusionMatrix(pred_numa,test_data$minority)
+```
 
+Even though m_fit only included the more significant interactions, it was outperformed in terms of prediction accuracy by the larger model m_fit1. The larger model predicted at a rate of 72.71% accuracy, while the smaller model predicted at a rate of 71.08% accuracy. Additionally, removing the least significant interactions from the larger model one at a time and testing the accuracy also resulted in decreased accuracy estimates. These findings suggest that including more interactions in the model can improve its predictive performance.
+
+```{r, echo = FALSE, warning=FALSE}
 minority_pred %>%
   roc_curve(truth = minority, pred, event_level = "second") %>%
   autoplot() +
@@ -511,9 +554,26 @@ minority_pred %>%
   roc_auc(truth = minority, pred, event_level = "second")
 ```
 
+The models AUC is 75.9, indicates that the model performs reasonably well in distinguishing between positive and negative cases. The higher the AUC, the better the model's ability to differentiate between the two classes. In general, an AUC above 70% is considered good, while an AUC above 90% is considered excellent.
+
+# Final Predictions
+Based on the logistic regression model we have built, we can make a prediction for whether or not a person with the given parameters is a minority or non-minority.
+
+Lets say, for example, That The person in question is 23 years old, unarmed, from the southeastern region, has a low unemployment rate of 0.03859900, a college rate of 0.5266234, a household income of 57174, a county income of 66006, and the cause of death is listed as gunshot.
+
+
+```{r}
+newdata <- tibble(age=23,region="South",urate=0.03859900,college=0.5266234,cause="Gunshot",armed="No",h_income=57174,county_income=66006)
+m_fit %>% predict(newdata, type = "response")
+```
+
+The model’s computed probability that this person is a minority is 30.64%. 
+
 
 # Conclusion
-In the conclusion that you write for your final paper, be sure to circle back to your question(s) of interest and discuss what your overall findings are
+In the conclusion that you write for your final paper, be sure to circle back to your question(s) of interest and discuss what your overall findings are. Clear discussion of what has been learned about the research question with
+statistical arguments supporting the conclusions. Suggestions for improving
+the analysis and discussion of future research are given
 
 Question of interest: What were the patterns and trends of police killings in the United States in 2015, and how did they vary by demographic factors such as location, ethnicity, and age?
 

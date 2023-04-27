@@ -1,0 +1,201 @@
+college_type,college_name,graduation_rate,tuition_1991,region,state
+private,Alfred,67,6350,Northeast,NY
+private,Alvernia,70,6202,Northeast,PA
+private,American International,62,7734,Northeast,MA
+private,Atlantic Christian,64,5690,South,NC
+public,Auburn,63,4428,South,AL
+private,Austin,61,8735,Southwest,TX
+private,Barker U.,55,6410,Central,KS
+private,Barat,73,7919,Midwest,IL
+private,Barber-Scotia,70,4000,South,NC
+private,Baylor,90,5620,Southwest,TX
+private,Bellarmine,74,6000,Southwest,TX
+private,Birmingham-Southern,70,9084,South,AL
+public,Bloomsburg U. of Pennsylvania,68,4480,Northeast,PA
+public,Bowling Green State,60,6158,Midwest,OH
+private,Bradley,77,8548,Midwest,IL
+private,Brigham Young,55,2850,Central,UT
+private,Cal Institute of Technology,75,13495,West,CA
+public,Cal Polytech- San Luis Obispo,55,7037,West,CA
+private,Campbell,53,6823,South,NC
+private,Case Western Reserve,65,12100,Midwest,OH
+public,Castleton State,65,5942,Northeast,VT
+public,Centenary of Louisiana,52,6500,South,LA
+private,Centre,73,9290,South,KY
+private,Chesnut Hill,78,7550,Northeast,PA
+public,City College-City U. of N.Y.,28,4145,Northeast,NY
+public,Clarion U. of Pennsylvania,65,4665,Northeast,PA
+public,Clemson,65,6440,South,SC
+public,Colorado State,50,6589,Central,CO
+private,Columbia U.,93,14697,Northeast,NY
+public,Cook College-Rutgers U.,68,7052,Northeast,NJ
+private,Cooper Union,84,300,Northeast,NY
+private,Creighton,62,8266,Central,NE
+private,Davidson,89,12442,South,NC
+public,Douglass C.-Rutgers,74,6382,Northeast,NJ
+private,Drury,50,6950,Midwest,MO
+private,Duke,93,14133,South,NC
+private,D'Youville,60,7530,Northeast,NY
+public,Eastern Illinois,59,5258,Midwest,IL
+private,Emory and Henry,60,800,South,VA
+private,Farleigh Dickinson-Rutherford,55,8812,Northeast,NJ
+private,Fisk,63,5000,South,TN
+private,Florida Southern,71,6080,South,FL
+public,Florida State,60,4619,South,FL
+private,Fontbonne,60,6970,Midwest,MO
+private,Fordham,60,10305,Northeast,NY
+public,Frostburg State,70,4112,Northeast,MD
+private,Furman,74,9874,South,SC
+public,Georgia Tech,66,6054,South,GA
+private,GMI Eng. & Mgt. Inst.,75,7482,Midwest,MI
+private,Grove City,75,4490,Northeast,PA
+private,Guilford,70,9540,South,NC
+private,Hahnemann,85,7275,Northeast,PA
+private,Hanover,60,6200,Midwest,IN
+private,Harvard,95,15530,Northeast,MA
+private,Harvey Mudd,70,13750,West,CA
+private,Hendrix,63,6653,South,AR
+private,Illinois College,69,6050,Midwest,IL
+private,Incarnate Word,70,6700,Southwest,TX
+public,Indiana U. of Pennsylvania,75,4646,Northeast,PA
+public,Indiana U.-Bloomington,59,6841,Midwest,IN
+public,Iowa State,62,6160,Midwest,IA
+public,James Madison,76,6004,South,VA
+public,Jersey City State,60,2903,Northeast,NJ
+private,John Carroll,79,8512,Midwest,OH
+private,Johns Hopkins,84,15380,Northeast,MD
+public,Kansas State,52,4681,Central,KS
+public,Keene State,60,6145,Northeast,NH
+private,King's College,69,7880,Northeast,PA
+private,Lake Erie,65,7840,Midwest,OH
+private,La Salle,80,9150,Northeast,PA
+private,Le Moyne,74,8410,Northeast,NY
+public,Livingston College-Rutgers U,51,6402,Northeast,NJ
+public,Lock Haven U of Pennsylvania,60,4622,Northeast,PA
+private,Loras,55,8065,Midwest,IA
+private,MacMurray,62,7650,Midwest,IL
+private,Manhattan,70,8836,Northeast,NY
+private,Marian,70,6558,Midwest,IN
+private,Marquette,71,8284,Midwest,WI
+public,Mary Washington,66,5318,South,VA
+private,Marywood,63,7300,Northeast,PA
+private,MIT,87,15690,Northeast,MA
+private,Meredith,66,5310,South,NC
+private,Miami of Ohio,73,7378,Midwest,OH
+public,Michigan State,67,8143,Midwest,MI
+public,Michigan Technology,59,6012,Midwest,MI
+public,Millersville U,64,4670,Northeast,PA
+private,Misericordia,80,7900,Northeast,PA
+private,Molloy,68,7350,Northeast,NY
+public,Montclair State,58,3032,Northeast,NJ
+private,Mount Marty,55,6215,Central,SD
+private,Mount St Mary,68,6835,Northeast,NY
+private,Mount St Vincent,80,9050,Northeast,NY
+private,Nazareth College of Rochester,69,7400,Northeast,NY
+public,New College of U of South Fla,43,5488,South,FL
+public,New Mexico Inst Mining & Tech,55,4841,Southwest,NM
+public,North Carolina State,59,5792,South,NC
+private,Notre Dame of Maryland,68,9000,Northeast,MD
+public,Ohio U,76,5805,Midwest,OH
+public,Ohio State,50,6930,Midwest,OH
+public,Penn State-University Park,59,8374,Northeast,PA
+public,Plymouth State-U of NH,,6434,Northeast,NH
+private,Pomona,90,14030,West,CA
+private,Prescott,68,7505,Southwest,AZ
+private,Princeton,91,15440,Northeast,NJ
+public,Purdue,69,6764,Midwest,IN
+private,Quincy,62,8000,Midwest,IL
+public,Radford,75,4076,South,VA
+private,Rice,88,7160,Southwest,TX
+private,Rosemont,70,8350,Northeast,PA
+public,Rutgers College-Rutgers U,72,6390,Northeast,NJ
+private,St Bonaventure,68,8487,Northeast,NY
+private,St John's U,65,6860,Northeast,NY
+private,St Joseph's U,75,9450,Northeast,PA
+private,St Louis University,63,8480,Midwest,MO
+private,St Mary's of San Antonio,64,6840,Southwest,TX
+private,St Olaf,87,11200,Midwest,MN
+private,St Peter's,65,6038,Northeast,NJ
+private,St Thomas Aquinas,70,6200,Northeast,NY
+public,Salisbury State,65,4016,Northeast,MD
+private,Seton Hill,75,8280,Northeast,PA
+public,Sheperd,67,3544,South,WV
+public,Shippensburg U  Pennsylvania,64,4622,Northeast,PA
+private,Siena,74,8270,Northeast,NY
+public,Slippery Rock,,,Northeast,PA
+private,Southwestern U,62,8500,Southwest,TX
+private,Spelman,,6560,South,GA
+private,Stanford,87,14280,West,CA
+public,State U of NY-Albany,70,4835,Northeast,NY
+public,State U of NY-Binghamton,72,4914,Northeast,NY
+public,State U of NY-Buffalo,55,4875,Northeast,NY
+public,State U of NY-Fredonia,49,4865,Northeast,NY
+public,State U of NY-Geneseo,82,4925,Northeast,NY
+public,State U of NY-Oneonta,55,4844,Northeast,NY
+public,State U of NY-Oswego,55,4855,Northeast,NY
+public,State U of NY-Plattsburgh,56,4839,Northeast,NY
+public,State U of NY-Potsdam,58,4825,Northeast,NY
+public,State U of NY-Stoney Brook,51,4861,Northeast,NY
+private,Swarthmore,90,15490,Northeast,PA
+public,Texas A & M,68,4146,Southwest,TX
+private,Texas Christian,56,7660,Southwest,TX
+public,Trenton State,65,3795,Northeast,NJ
+private,Trinity University,75,9676,Southwest,TX
+public,U  of Akron,70,6554,Midwest,OH
+public,U  of Arizona,60,6552,Southwest,AZ
+public,U  of California-Berkeley,65,7836,West,CA
+public,U  of California-Davis,72,7617,West,CA
+public,U  of California-Irvine,50,7712,West,CA
+public,U  of California-Los Angeles,63,7518,West,CA
+public,U  of California-Riverside,69,7530,West,CA
+public,U  of California-San Diego,60,7657,West,CA
+public,U  of California-Santa Barbara,60,7554,West,CA
+public,U  of California-Santa Cruz,49,7729,West,CA
+private,U  of Chicago,79,15135,Midwest,IL
+public,U  of Colorado-Boulder,60,10774,Central,CO
+public,U  of Connecticut,70,7775,Northeast,CT
+private,U  of Dallas,63,7900,Southwest,TX
+public,U  of Delaware,64,7916,Northeast,DE
+private,U  of Detroit,60,8700,Midwest,MI
+public,U  of Florida,60,4630,South,FL
+public,U  of Georgia,55,5751,South,GA
+public,U  of Hawaii-Manoa,54,3776,West,HA
+public,U of Illinois-Urbana-Champaign,71,6408,Midwest,IL
+public,U of Iowa,54,6240,Midwest,IA
+public,U of Kansas,53,4688,Central,KS
+public,U of Kentucky,49,4730,South,KY
+public,U of Lowell,65,6685,Northeast,MA
+public,U of Maine,55,6435,Northeast,ME
+public,U of Maryland-College Park,43,6508,Northeast,MD
+public,U of Minnesota-Duluth,72,5280,Midwest,MN
+public,U of Minnesota-Morris,65,6241,Midwest,MN
+public,U of Minnesota-Twin Cities,42,6338,Midwest,MN
+public,U of Mississippi,54,3241,South,MS
+public,U of Missouri-Columbia,54,5813,Midwest,MO
+public,U of Missouri-Rolla,53,5743,Midwest,MO
+public,U of NC-Chapel Hill,73,5622,South,NC
+private,U of Notre Dame,93,12390,Midwest,IN
+public,U of Pittsburgh,,8770,Northeast,PA
+public,U of Rhode Island,53,7047,Northeast,RI
+private,U of Scranton,83,8846,Northeast,PA
+public,U of South Carolina,60,6400,South,SC
+public,U of South Dakota,65,3208,Central,SD
+public,U of South Florida,50,4080,South,FL
+public,U of Texas-Austin,57,4142,Southwest,TX
+private,U of Tulsa,65,7950,Southwest,OK
+public,U of Virginia,90,8136,South,VA
+public,U of Washington,56,5433,West,WA
+public,U of West Florida,65,4620,South,FL
+public,U of Madison-Wisconsin,63,6832,Midwest,WI
+public,Virginia Military Institute,65,8730,South,VA
+public,Virginia Tech,64,6231,South,VA
+private,Wabash,81,9800,Midwest,IN
+private,Wake Forest,78,9700,South,NC
+public,Washington State,43,5534,West,WA
+private,Webber,76,5415,South,FL
+private,Wesley,70,7255,Northeast,DE
+public,Western Michigan,60,5366,Midwest,MI
+public,West Virginia U,52,4645,South,WV
+private,Westminter,68,7700,Midwest,MO
+public,William and Mary,81,9246,South,VA
+private,Yale,85,15180,Northeast,CT

@@ -33,7 +33,7 @@ pk
 
 # Introduction
 
-The year 2015 was marked by several high-profile incidents of police violence, including the shooting of Walter Scott in South Carolina and the death of Freddie Gray in Baltimore. These incidents sparked a national conversation about police use of force, racial bias, and accountability. A general research question that arises from this context is: What were the patterns and trends of police killings in the United States in 2015, and how did they vary by demographic factors such as location, ethnicity, and age? This question is important because it sheds light on the prevalence and distribution of police violence in a particular year and provides a baseline for understanding how this issue has evolved over time. Answering this question could help inform policy discussions and interventions aimed at reducing police violence and improving community-police relations.
+The year 2015 was marked by several high-profile incidents of police violence, including the shooting of Walter Scott in South Carolina and the death of Freddie Gray in Baltimore. These incidents sparked a national conversation about police use of force, racial bias, and accountability. A general research question that arises from this context is: What were the patterns and trends of police killings in the United States in 2015, and how did they vary by demographic factors such as location, income, ethnicity, and age? This question is important because it sheds light on the prevalence and distribution of police violence in a particular year and provides a baseline for understanding how this issue has evolved over time. Answering this question could help inform policy discussions and interventions aimed at reducing police violence and improving community-police relations.
 
 The police--killings dataset is populated utilizing two primary sources. The first comes from an organization called the Guardian Media Group. This global news organization launched an interactive database with info on Americans killed by police in the year 2015. The database, aptly named "The Counted", was built by combining media coverage, reader submissions, police and coroners' reports, voter registration data, witness testimony, court records, photographs, reliable open-sourced efforts like "Fatal Encounters" and "Killed by Police" as well as its own verification process by comparing its own reporting with data that has been crowdsourced.  
 
@@ -51,13 +51,19 @@ In order to answer these questions, I plan to direct my focus (currently) on the
 
 - Race/Ethnicity
 
-- State
+- State/Region
 
 - Armed
 
 - Gender
 
 - Household Income
+
+- County Income
+
+- Urate(Unemployment Rate)
+
+- Colleges
 
 
 # Description of Statistical Methods and Their Usefulness
@@ -416,6 +422,7 @@ tidy(m_fit)
 ```
 
 After analyzing the data, It was found that the p-values were only significant for h_income, age, county_income, and urate. We also included region in the analysis as certain regions appeared to have a significant impact.
+
 $\widehat{minority} = -16.818 + 0.058age + 13.947armedFirearm + 13.410armedKnife + 13.208No + 13.52armedNon-lethal firearm + 14.027armedOther + 14.163armedUnknown + 13.104armedVehicle + 	0.567regionMidwest - 0.125regionNortheast	- 0.167regionSouth - 0.710regionSouthwest - 0.377regionWest - 4.940urate + 0.602college + 2.371causeGunshot + 1.308causeStruck by vehicle + 1.318causeTaser + 2.223causeUnknown + 	0.00001939387h_income - 0.00002999880county_income$ 
 
 
@@ -571,10 +578,15 @@ The model’s computed probability that this person is a minority is 30.64%.
 
 
 # Conclusion
-In the conclusion that you write for your final paper, be sure to circle back to your question(s) of interest and discuss what your overall findings are. Clear discussion of what has been learned about the research question with
-statistical arguments supporting the conclusions. Suggestions for improving
-the analysis and discussion of future research are given
 
-Question of interest: What were the patterns and trends of police killings in the United States in 2015, and how did they vary by demographic factors such as location, ethnicity, and age?
+Based on the analysis conducted, it is evident that police killings in the United States in 2015 showed patterns and trends that were influenced by demographic factors such as location, income, ethnicity, and age. The data showed that The majority of individuals who were killed by police were relatively young, with a median age of 35 years old. Hispanic/Latino households had the lowest income range among the demographic groups analyzed, while white households had the largest income range. It is worth noting that the dataset is incomplete for some states, which limits the completeness of the analysis. Future research could benefit from examining specific states with high numbers of police killings, such as California and Texas, in order to gain a more detailed understanding of the patterns and trends in police violence in those areas. 
 
-The Guardian is a newspaper artcle so more may be covered on nonminorities in general.
+Interestingly, White individuals accounted for the highest proportion of police killings among both men and women, representing 50% of the total distribution. However, There were more stark differences in the distribution of ethnicity for males and females within the minority groups, with more Hispanic/Latino men killed than women, and a higher proportion of black women killed compared to black men.
+
+Analysis of the box plot reveals that males have a distribution with a larger range and a greater number of outliers compared to females. This pattern is particularly evident when examining the age of the individuals in the dataset, where the oldest male (Louis Becker) was 87 years old at the time of his death, while the oldest female (Hue Dang) was only 63 years old. It was also apparent that minorities within the 18-25 age range were more likely to be killed by police than non-minorities. In contrast, non-minorities were more likely to be killed in the over 50 or unknown age bracket. The logistic regression model revealed that age was the most significant demographic factor, with older individuals being more likely to be classified as minorities.
+
+Furthermore, the regression models showed that variables such as household income, county income, and unemployment rate were correlated with each other, but not to a degree that would warrant their removal from the model. The inclusion of certain variables such as college and armed status also improved the accuracy of the model. To improve the analysis, future research could consider including additional variables such as the ethnicity of the police officer involved. Additionally, exploring the impact of police training and community policing initiatives on the incidence of police killings could provide valuable insights.
+
+In conclusion, the analysis revealed patterns and trends in police killings in the United States in 2015 that were influenced by demographic factors. The findings provide important insights that can inform policy and training initiatives aimed at reducing the incidence of police killings in the United States.
+
+

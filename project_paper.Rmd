@@ -267,7 +267,20 @@ pk %>%
   arrange(desc(n))
 ```
 
-This bar chart illustrates the distribution of police killings by gender and ethnicity, based on a sample of 467 individuals. White individuals accounted for the highest proportion of police killings among both men and women, representing 50% of the total distribution. It is also definitely worth noting that the distribution of ethnicity is different for males and females. There are alot more male Hispanc/Latino men killed than women. There is also a higher proportion of black women who were killed in comparison to black men. 
+```{r, echo=FALSE}
+pk %>% 
+  group_by(gender) %>% 
+    count(gender = factor(gender), raceethnicity = factor(raceethnicity)) %>% 
+    mutate(pct = prop.table(n))
+```
+
+White men accounted for the highest proportion of police killings among all other male racial groups. at 44%
+
+Black women accounted for the highest proportion of police killings among all female racial groups at 44%.
+
+There is a higher proportion of male Hispanic/Latino Men(20.4%) killed than Hispanic/Latino Women(1.3%).
+
+There is also a higher proportion of black women(44%) who were killed in comparison to black men(30%)
 
 # Gender
 ```{r gen_count, echo = FALSE}
@@ -298,7 +311,24 @@ ggplot(pk, mapping = aes(y = gender, fill = cause)) +
 guides(fill = guide_legend(nrow = 2, byrow = TRUE))
 ```
 
-The majority of individuals in the dataset were killed by gunshot, which is a common method used by law enforcement. However, it is important to investigate the proportion of these individuals who were armed at the time of the incident.
+```{r, echo=FALSE}
+pk %>% 
+  group_by(gender) %>% 
+    count(gender = factor(gender), cause = factor(cause)) %>% 
+    mutate(pct = prop.table(n))
+```
+
+82% of women and 87% of men were killed by gunshots, which is a common method used by law enforcement. 
+
+5% of women were killed by tasers versus  6.4% of men. 
+
+It is also very important to note that only male victims had a proportion(3.8%) of individuals who died in custody.  
+
+12.5% of women were killed by being struck by a vehicle versus only 2% of men.
+
+However, it is important to investigate the proportion of these individuals who were armed at the time of the incident.
+
+
 
 ```{r gen_prop2, echo = FALSE}
 ggplot(pk, mapping = aes(y = gender, fill = armed)) +
@@ -318,7 +348,22 @@ ggplot(pk, mapping = aes(y = gender, fill = armed)) +
 guides(fill = guide_legend(nrow = 2, byrow = TRUE))
 ```
 
-The data shows that a higher proportion of women than men were carrying a firearm at the time of their killing. This information is relevant to answering the general research question because it suggests a potential association between being armed and being perceived as a threat.
+```{r, echo=FALSE}
+pk %>% 
+  group_by(gender) %>% 
+    count(gender = factor(gender), armed = factor(armed)) %>% 
+    mutate(pct = prop.table(n))
+```
+
+The data shows that 58.5% of women were carrying a firearm at the time of their killing versus only 51.4% of men 
+
+A higher proportion of men were killed while carrying a knife(15.4%) than women(9.4%).
+
+A relatively equal proportion of both men and women were killed while having no weapon in hand.
+
+And a higher proportion of women(10%) than men( 1.6%)were killed who were considered to be using a vehicle as a weapon
+
+This information is relevant to answering the general research question because it suggests a potential association between being armed and being perceived as a threat.
 
 # Summarize State Killings
 ```{r, prop, echo = FALSE}
@@ -566,7 +611,7 @@ The models AUC is 75.9, indicates that the model performs reasonably well in dis
 # Final Predictions
 Based on the logistic regression model we have built, we can make a prediction for whether or not a person with the given parameters is a minority or non-minority.
 
-Lets say, for example, That The person in question is 23 years old, unarmed, from the southeastern region, has a low unemployment rate of 0.03859900, a college rate of 0.5266234, a household income of 57174, a county income of 66006, and the cause of death is listed as gunshot.
+Lets say, for example, That The person in question is 23 years old, unarmed, from the south region, has a low unemployment rate of 0.03859900, a college rate of 0.5266234, a household income of 57174, a county income of 66006, and the cause of death is listed as gunshot.
 
 
 ```{r}
@@ -581,7 +626,7 @@ The model’s computed probability that this person is a minority is 30.64%.
 
 Based on the analysis conducted, it is evident that police killings in the United States in 2015 showed patterns and trends that were influenced by demographic factors such as location, income, ethnicity, and age. The data showed that The majority of individuals who were killed by police were relatively young, with a median age of 35 years old. Hispanic/Latino households had the lowest income range among the demographic groups analyzed, while white households had the largest income range. It is worth noting that the dataset is incomplete for some states, which limits the completeness of the analysis. Future research could benefit from examining specific states with high numbers of police killings, such as California and Texas, in order to gain a more detailed understanding of the patterns and trends in police violence in those areas. 
 
-Interestingly, White individuals accounted for the highest proportion of police killings among both men and women, representing 50% of the total distribution. However, There were more stark differences in the distribution of ethnicity for males and females within the minority groups, with more Hispanic/Latino men killed than women, and a higher proportion of black women killed compared to black men.
+Interestingly, White men accounted for the highest proportion of police killings among all other male racial groups at 44%. However, There were more stark differences in the distribution of ethnicity for males and females within the minority groups, with more Hispanic/Latino men killed than women, and a higher proportion of black women killed compared to black men.
 
 Analysis of the box plot reveals that males have a distribution with a larger range and a greater number of outliers compared to females. This pattern is particularly evident when examining the age of the individuals in the dataset, where the oldest male (Louis Becker) was 87 years old at the time of his death, while the oldest female (Hue Dang) was only 63 years old. It was also apparent that minorities within the 18-25 age range were more likely to be killed by police than non-minorities. In contrast, non-minorities were more likely to be killed in the over 50 or unknown age bracket. The logistic regression model revealed that age was the most significant demographic factor, with older individuals being more likely to be classified as minorities.
 

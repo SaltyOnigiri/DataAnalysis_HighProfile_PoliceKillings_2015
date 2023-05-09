@@ -517,7 +517,7 @@ tidy(minority_fit)
 $\widehat{minority} = -1.6630 + 0.04769age$ 
 
 
-```{r, echo = FALSE, warning=FALSE}
+```{r, warning=FALSE}
 newdata <- tibble(age = c(18, 37, 52))
 minority_fit %>% predict(newdata, type = "response" )
 ```

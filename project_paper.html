@@ -1042,6 +1042,8 @@ may be worthwhile.</p>
 ## 2 age           0.0501   0.00315      15.9 8.19e-57</code></pre>
 <p><span class="math inline">\(\widehat{minority} = -1.6630 +
 0.04769age\)</span></p>
+<pre class="r"><code>newdata &lt;- tibble(age = c(18, 37, 52))
+minority_fit %&gt;% predict(newdata, type = &quot;response&quot; )</code></pre>
 <pre><code>##         1         2         3 
 ## 0.2401395 0.4500058 0.6342176</code></pre>
 <p>Based on the analysis, the following probabilities were observed:</p>

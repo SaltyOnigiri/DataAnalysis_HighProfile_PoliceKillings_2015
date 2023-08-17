@@ -303,22 +303,3 @@ pk %>%
 ```
 
 The Los Angeles Police Department has the highest number of police killings in the dataset, followed by the Los Angeles County Sheriff's Department and the Oklahoma City Police Department. These findings reinforce the observation from the US Proportions map that California is a hotspot for police killings. It is important to investigate why certain law enforcement agencies and geographic regions have higher rates of police violence in order to identify potential contributing factors to develop targeted interventions.
-
-
-
-INSTRUCTIONS TO DELETE LATER
-
-Your project goes here! Before you submit, make sure your chunks are not displayed in your html output by using`echo = FALSE`. (Unless there is some particular chunk of code you want to highlight in your write-up.)
-
-You can add sections as you see fit. Make sure you have a section called Introduction at the beginning and a section called Conclusion at the end. The rest is up to you!  (For your project proposal, you do not need to have the Conclusion section.)
-
-The outcome (dependent, response, Y) and predictor (independent, explanatory, X) variables you will use to answer your question.
-The comparison groups you will use, if applicable.
-Preliminary exploratory data analysis, including some summary statistics and visualizations, along with some explanation on how they help you learn more about your data.
-(You can add to these later as you work on your project.)
-The statistical method(s) that you believe will be useful in answering your question(s). (You can update these later as you work on your project.)
-
-**Note:**  When you are done with your project, knit one last time to create the .md file that is readable on github:  Click the arrow next to **Knit** and select **Knit to github_document**.
-Be sure to also push the resulting .md file to your repo.
-
-Delete these instructions from your final project .Rmd file!
